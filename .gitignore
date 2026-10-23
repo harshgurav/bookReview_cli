@@ -1,0 +1,4 @@
+﻿node_modules/
+book-review-app/node_modules/
+build/
+.env.local
