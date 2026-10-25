@@ -1,4 +1,5 @@
 import React from 'react';
+import { Share2 } from 'lucide-react';
 
 function ShareButton({ onShare }) {
   return (
@@ -6,9 +7,9 @@ function ShareButton({ onShare }) {
       type="button"
       className="share-btn"
       onClick={onShare}
-      title="Share your book review"
+      title="Share or export your book review page"
     >
-      <span style={{ fontSize: '17px', lineHeight: 1 }}>↗</span>
+      <Share2 size={16} strokeWidth={2.2} />
       <span>share</span>
     </button>
   );

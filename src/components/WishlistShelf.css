@@ -1,0 +1,659 @@
+/* Wishlist Bookshelf Styles - Spanning full horizontal desktop space */
+.wishlist-shelf-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.shelf-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 14px 20px;
+  background: var(--journal-paper);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.shelf-toolbar-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.shelf-page-title {
+  font-family: 'Caveat', cursive, sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: 0.5px;
+}
+
+.shelf-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.shelf-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.shelf-filter-chips {
+  display: flex;
+  gap: 8px;
+  background: var(--bg-color);
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.shelf-chip {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.shelf-chip:hover {
+  color: var(--text-main);
+}
+
+.shelf-chip.active {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.btn-add-book {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-add-book:hover {
+  opacity: 0.92;
+  transform: translateY(-1px) scale(1.04);
+}
+
+/* Static circular reset arrow button inside top-right corner of bookcase rectangle */
+.shelf-floating-reset-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 95;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #2b1710;
+  color: #f6e05e;
+  border: 1.5px solid #d4af37;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.shelf-floating-reset-btn:hover {
+  background: #3d2218;
+  color: #fef08a;
+  border-color: #fef08a;
+  transform: scale(1.06);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+}
+
+/* Full-width Bookcase Frame */
+.bookcase-frame {
+  width: 100%;
+  background: var(--shelf-bg, #1a1615);
+  border: 4px solid var(--shelf-wood-dark, #5a3825);
+  border-radius: 12px;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6), 0 10px 30px rgba(0, 0, 0, 0.5);
+  padding: 24px 20px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* When 2D Physics Sandbox is active, flatten intermediate wrappers so all bodies position relative to .bookcase-frame */
+.bookcase-frame.physics-active-frame {
+  display: block;
+}
+
+.bookcase-frame.physics-active-frame .shelf-tier,
+.bookcase-frame.physics-active-frame .shelf-books-row,
+.bookcase-frame.physics-active-frame .shelf-decor-left,
+.bookcase-frame.physics-active-frame .shelf-decor-right,
+.bookcase-frame.physics-active-frame .book-stack-horizontal {
+  position: static !important;
+  overflow: visible !important;
+  transform: none !important;
+}
+
+.shelf-tier {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: 180px;
+}
+
+.shelf-books-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  padding: 0 84px;
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+  z-index: 2;
+  scrollbar-width: thin;
+}
+
+/* Shelf Book Spines */
+.shelf-book-spine {
+  border-radius: 4px 4px 0 0;
+  cursor: grab;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 4px;
+  box-shadow: inset -2px 0 5px rgba(0, 0, 0, 0.4), inset 2px 0 4px rgba(255, 255, 255, 0.2), 3px 0 6px rgba(0, 0, 0, 0.3);
+  position: relative;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease;
+  flex-shrink: 0;
+  user-select: none;
+  touch-action: none;
+}
+
+.shelf-book-spine:active {
+  cursor: grabbing;
+}
+
+.shelf-book-spine:hover {
+  transform: translateY(-10px) scale(1.04);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+
+.shelf-book-spine.active {
+  transform: translateY(-14px) scale(1.08);
+  outline: 3px solid #ffcc00;
+  z-index: 12;
+}
+
+.spine-title {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+  max-height: 90px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.spine-author {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 9px;
+  letter-spacing: 0.3px;
+  max-height: 40px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.spine-stripes {
+  width: 100%;
+  height: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.spine-gold-emboss {
+  color: #ffd166;
+  font-size: 10px;
+  line-height: 1;
+}
+
+/* Leaning book */
+.leaning-book {
+  transform: rotate(12deg) translateY(6px);
+  transform-origin: bottom left;
+  margin-left: 12px;
+}
+
+.leaning-book:hover {
+  transform: rotate(0deg) translateY(-10px) scale(1.05);
+}
+
+/* Horizontal Book Stack */
+.book-stack-horizontal {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 2px;
+  margin: 0 14px;
+  flex-shrink: 0;
+}
+
+.horizontal-book {
+  height: 22px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #f4ead5;
+  box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.18), 0 2px 4px rgba(0, 0, 0, 0.35);
+  white-space: nowrap;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+
+.horizontal-book:active {
+  cursor: grabbing;
+}
+
+/* Interactive Pullable Wooden Shelf Plank */
+.wooden-shelf-plank {
+  width: 100%;
+  height: 18px;
+  background: var(--shelf-plank, linear-gradient(180deg, #8b5a2b 0%, #5c3818 100%));
+  border-top: 1px solid rgba(212, 175, 115, 0.35);
+  border-radius: 3px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.45);
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  cursor: grab;
+  touch-action: none;
+}
+
+.wooden-shelf-plank:active {
+  cursor: grabbing;
+}
+
+.plank-grip-hint {
+  font-family: var(--font-serif, serif);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  color: rgba(244, 234, 213, 0.65);
+  pointer-events: none;
+}
+
+.plank-release-pin {
+  background: linear-gradient(180deg, #d4af37 0%, #9a7b2c 100%);
+  color: #1f120b;
+  border: 1px solid #4a3710;
+  border-radius: 3px;
+  padding: 1px 8px;
+  font-family: var(--font-serif, serif);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  cursor: pointer;
+  line-height: 1.2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.plank-release-pin:hover {
+  transform: scale(1.06);
+  filter: brightness(1.12);
+}
+
+.plank-shadow {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Custom SVG Vector Art Shelf Decorations */
+.shelf-decor-left,
+.shelf-decor-right {
+  position: absolute;
+  bottom: 18px;
+  display: flex;
+  align-items: flex-end;
+  z-index: 5;
+}
+
+.shelf-decor-left { left: 10px; }
+.shelf-decor-right { right: 10px; }
+
+.vector-decor-item {
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.45));
+  transition: transform 0.2s ease;
+}
+
+.vector-decor-item:hover {
+  transform: translateY(-4px) scale(1.04);
+}
+
+.vector-decor-item:active {
+  cursor: grabbing;
+}
+
+.vector-shelf-svg {
+  display: block;
+  overflow: visible;
+}
+
+.trailing-ivy-svg {
+  margin-bottom: -28px;
+}
+
+/* Modals & Overlays */
+.book-quick-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.book-quick-card {
+  background: var(--journal-paper);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 440px;
+  padding: 24px;
+  position: relative;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.quick-card-color-stripe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+}
+
+.quick-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+
+.quick-card-badge {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--accent);
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.quick-card-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.quick-card-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.quick-card-author {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.quick-card-notes {
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  border-left: 3px solid var(--accent);
+}
+
+.quick-card-status-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.quick-card-select {
+  background: var(--journal-bg);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+}
+
+.quick-card-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-review-now {
+  flex: 1;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-review-now:hover {
+  opacity: 0.9;
+}
+
+.btn-delete-book {
+  background: transparent;
+  color: #e63946;
+  border: 1px solid #e63946;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-delete-book:hover {
+  background: rgba(230, 57, 70, 0.15);
+}
+
+/* Add Book Form */
+.add-book-modal {
+  background: var(--journal-paper);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+  padding: 24px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+.add-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.add-modal-header h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.add-book-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: var(--journal-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-main);
+  padding: 8px 12px;
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--accent);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.color-palette-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.color-choice-bubble {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.2s;
+}
+
+.color-choice-bubble:hover {
+  transform: scale(1.15);
+}
+
+.color-choice-bubble.selected {
+  border-color: #fff;
+  transform: scale(1.2);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+.add-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-cancel {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-confirm-add {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  padding: 8px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
