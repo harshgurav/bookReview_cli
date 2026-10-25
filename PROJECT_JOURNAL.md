@@ -314,4 +314,9 @@ Fields:
       - **Back Face:** Inside front cover marbled endpaper / parchment with `✦ EX LIBRIS ✦` seal.
       - When unclasped, the leather cover physically turns over the spine 180° into Spread 0; clicking "Close Journal Cover" smoothly turns the cover back 180° and snaps shut.
     - **Deployment & Credential Provisioning Documentation:** Provided complete instructions for Firebase ("firewall") credentials and 1-click Vercel deployment.
+  - **Step 14 Completed (Firebase Integration & Production Vercel Push):**
+    - **Live Firebase Config Applied:** Connected real Firebase project credentials (`projectId: book-review-journal-f5363`, `authDomain: book-review-journal-f5363.firebaseapp.com`) in [`src/firebase.js`](book-review-app/src/firebase.js) and [`.env`](book-review-app/.env), enabling real Google Sign-In, Email Authentication, and Cloud Firestore ledger sync.
+    - **Production Code Pushed to GitHub:** Successfully committed and pushed all new features, components, and fixes to `https://github.com/harshgurav/bookReview_cli.git` (commit `0cff551`) on branch `main`.
+    - **Vercel Automatic Deployment:** Because Vercel is connected to `github.com/harshgurav/bookReview_cli`, the push automatically triggered Vercel's production build.
+    - **Zero-Localhost Share Links:** The `[ share ]` button now generates live public URLs (`https://<your-project>.vercel.app/?share=...`) that work for any recipient worldwide without running any local servers.
   - Ready for user testing and next instructions.
